@@ -1,0 +1,12 @@
+<odoo>
+<!--    <record id="laptop_allocation_rule_employee" model="ir.rule">-->
+<!--&lt;!&ndash;        <field name="name">Laptop Allocations: employee sees only their own</field>&ndash;&gt;-->
+<!--&lt;!&ndash;        <field name="model_id" ref="model_laptop_allocation"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        <field name="groups" eval="[(4, ref('base.group_user'))]"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        <field name="domain_force">[('employee_id.user_id.id', '=', user.id)]</field>&ndash;&gt;-->
+<!--&lt;!&ndash;        <field name="perm_read" eval="1"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        <field name="perm_write" eval="1"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        <field name="perm_create" eval="1"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        <field name="perm_unlink" eval="0"/>&ndash;&gt;-->
+<!--    </record>-->
+</odoo>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+        <!-- Form View -->
+    <record id="view_laptop_allocation_form" model="ir.ui.view">
+        <field name="name">laptop.allocation.form</field>
+        <field name="model">laptop.allocation</field>
+        <field name="arch" type="xml">
+            <form string="Laptop Allocation">
+                <header>
+                    <button name="open_stock_move" type="object" string="View Move"
+                            class="oe_highlight"
+                            attrs="{'invisible': [('stock_move_id','=',False)]}"/>
+                    <button name="action_return_laptop" type="object" string="Return Laptop"
+                            class="btn-secondary"
+                            attrs="{'invisible': [('state', '=', 'returned')]}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="employee_id" options="{'no_create': True}"/>
+                        <field name="product_id" attrs="{'readonly': [('state', '=', 'returned')]}"/>
+                        <field name="source_location_id" attrs="{'readonly': [('state', '=', 'returned')]}"/>
+                        <field name="destination_location_id" attrs="{'readonly': [('state', '=', 'returned')]}"/>
+                        <field name="date_allocated"/>
+                        <field name="date_returned"/>
+                        <field name="state" readonly="1"/>
+                        <field name="stock_move_id" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="view_laptop_allocation_tree" model="ir.ui.view">
+        <field name="name">laptop.allocation.tree</field>
+        <field name="model">laptop.allocation</field>
+        <field name="arch" type="xml">
+            <tree string="Laptop Allocations" default_order="date_allocated desc">
+                <field name="employee_id"/>
+                <field name="product_id"/>
+                <field name="state"/>
+                <field name="source_location_id"/>
+                <field name="destination_location_id"/>
+                <field name="date_allocated"/>
+                <field name="date_returned"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Employee Form Inheritance -->
+    <record id="hr_employee_laptop_allocation_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.form.laptop.allocation</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Laptop Allocations">
+                    <field name="laptop_allocation_ids" readonly="1">
+                        <tree string="Laptop Allocations">
+                            <field name="product_id"/>
+                            <field name="source_location_id"/>
+                            <field name="destination_location_id"/>
+                            <field name="date_allocated"/>
+                            <field name="date_returned"/>
+                            <field name="state"/>
+                        </tree>
+                    </field>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_laptop_allocation" model="ir.actions.act_window">
+        <field name="name">Laptop Allocations</field>
+        <field name="res_model">laptop.allocation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+<!--        <field name="binding_icon">fa-laptop</field> &lt;!&ndash; Optional: Needs `web` module &ndash;&gt;-->
+    </record>
+
+    <!-- Menu Items -->
+    <menuitem id="menu_laptop_allocation_root" name="Laptop Management" parent="hr.menu_hr_root" sequence="50"/>
+    <menuitem id="menu_laptop_allocation" name="Laptop Allocations"
+              parent="menu_laptop_allocation_root" action="action_laptop_allocation"/>
+</odoo>
