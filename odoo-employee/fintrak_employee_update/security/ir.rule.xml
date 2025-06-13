@@ -1,0 +1,11 @@
+<!-- security/ir.rule.xml -->
+<record id="employee_personal_info_rule" model="ir.rule">
+    <field name="name">Employee can see/edit their own personal info</field>
+    <field name="model_id" ref="your_module.model_hr_employee_personal_info"/>
+    <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+    <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="0"/>
+    <field name="perm_unlink" eval="0"/>
+  </record>

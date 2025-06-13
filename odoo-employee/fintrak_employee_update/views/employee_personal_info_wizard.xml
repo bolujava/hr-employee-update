@@ -1,0 +1,39 @@
+<!-- views/employee_personal_info_wizard.xml -->
+<odoo>
+  <record id="view_employee_personal_info_wizard_form" model="ir.ui.view">
+    <field name="name">employee.personal.info.wizard.form</field>
+    <field name="model">employee.personal.info.wizard</field>
+    <field name="arch" type="xml">
+      <form string="Fill Personal Information">
+        <group string="Personal Information">
+          <field name="date_of_birth" />
+          <field name="state_of_origin" />
+          <field name="lga" />
+          <field name="town" />
+          <field name="address_of_employee" />
+        </group>
+
+        <group string="Contact Information">
+          <field name="contact_phone_number" />
+          <field name="alternate_phone_number" />
+        </group>
+
+        <group string="Identification">
+          <field name="means_of_identification" />
+          <field name="means_of_identification_number" />
+          <field name="state_of_issuance" />
+        </group>
+
+        <group string="Job and Family Details">
+          <field name="job_title" />
+          <field name="marital_status" />
+          <field name="number_of_primary_dependants" />
+        </group>
+        <footer>
+          <button string="Save" type="object" name="action_save_info" class="btn-primary" />
+          <button string="Cancel" class="btn-secondary" special="cancel" />
+        </footer>
+      </form>
+    </field>
+  </record>
+</odoo>

@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+        <record id="view_employee_personal_info_form" model="ir.ui.view">
+            <field name="name">hr.employee.personal.info.form</field>
+            <field name="model">hr.employee.personal.info</field>
+            <field name="arch" type="xml">
+                <form string="Personal Info">
+                    <sheet>
+                        <group>
+                            <field name="identification_number" />
+                            <field name="national_id" />
+                            <field name="passport_number" />
+                            <field name="birth_place" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>
+

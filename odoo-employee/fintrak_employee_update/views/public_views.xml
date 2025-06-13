@@ -1,0 +1,44 @@
+<!-- views/hr_employee_personal_info_tab.xml -->
+<odoo>
+    <data>
+      <record id="hr_employee_form_view_inherit_personal_tab" model="ir.ui.view">
+        <field name="name">hr.employee.form.personal.tab</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+          <xpath expr="//sheet/notebook" position="inside">
+            <page string="Personal Info">
+              <form string="Employee Details">
+                <sheet>
+                  <group string="Personal Information">
+                    <field name="date_of_birth"/>
+                    <field name="state_of_origin"/>
+                    <field name="lga"/>
+                    <field name="town"/>
+                    <field name="address_of_employee"/>
+                  </group>
+
+                  <group string="Contact Information">
+                    <field name="contact_phone_number"/>
+                    <field name="alternate_phone_number"/>
+                  </group>
+
+                  <group string="Identification">
+                    <field name="means_of_identification"/>
+                    <field name="means_of_identification_number"/>
+                    <field name="state_of_issuance"/>
+                  </group>
+
+                  <group string="Job and Family Details">
+                    <field name="job_title"/>
+                    <field name="marital_status"/>
+                    <field name="number_of_primary_dependants"/>
+                  </group>
+                </sheet>
+              </form>
+            </page>
+          </xpath>
+        </field>
+      </record>
+    </data>
+  </odoo>

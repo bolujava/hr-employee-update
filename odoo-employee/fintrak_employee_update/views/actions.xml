@@ -1,0 +1,9 @@
+<!-- views/actions.xml -->
+<odoo>
+    <record id="action_open_employee_personal_info_wizard" model="ir.actions.act_window">
+      <field name="name">Fill Personal Info</field>
+      <field name="res_model">employee.personal.info.wizard</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+    </record>
+  </odoo>
