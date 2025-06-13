@@ -1,0 +1,31 @@
+<odoo>
+    <data>
+        <record id="view_hr_employee_form_inherit_certificates" model="ir.ui.view">
+            <field name="name">hr.employee.form.inherit.certificates</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='work_email']" position="after">
+                    <field name="next_of_kin_name"/>
+                    <field name="next_of_kin_address"/>
+                    <field name="next_of_kin_phone_number"/>
+                </xpath>
+
+                <xpath expr="//notebook" position="inside">
+                    <page string="Certificates">
+                        <field name="certificate_ids">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="date_issued"/>
+                                <field name="date_of_expiration"/>
+                                <field name="file_name"/>
+                                <field name="file" widget="image" filename="file_name" options="{'height': 64, 'width': 64}"/>
+                                <button name="download_certificate" string="Download" type="object"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
