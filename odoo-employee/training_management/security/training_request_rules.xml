@@ -1,0 +1,181 @@
+<odoo>
+    <data noupdate="1">
+        <!-- Group Definition -->
+        <record id="group_training_manager" model="res.groups">
+            <field name="name">HR OR Admin Training Manager</field>
+            <field name="category_id" ref="base.module_category_human_resources"/>
+        </record>
+
+        <record id="group_training_department_manager" model="res.groups">
+            <field name="name">Training Department Manager</field>
+            <field name="category_id" ref="base.module_category_human_resources"/>
+        </record>
+
+        <!-- Access Rules for training.list -->
+        <record id="training_list_read_only" model="ir.rule">
+            <field name="name">Training List: Read Only for Users</field>
+            <field name="model_id" ref="model_training_list"/>
+            <field name="domain_force">[]</field>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="training_list_rule_own" model="ir.rule">
+            <field name="name">Training List: Own Records</field>
+            <field name="model_id" ref="model_training_list"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="training_list_rule_all" model="ir.rule">
+            <field name="name">Training List: Full Access for Managers</field>
+            <field name="model_id" ref="model_training_list"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_training_manager'))]"/>
+        </record>
+
+        <!-- Record Rule For Departmental Managers -->
+        <record id="rule_training_request_department_manager" model="ir.rule">
+            <field name="name">Training Requests by Department</field>
+            <field name="model_id" ref="model_training_request"/>
+            <field name="groups" eval="[(4, ref('group_training_department_manager'))]"/>
+            <field name="domain_force">[('department_id.manager_id.user_id', '=', user.id)]</field>
+        </record>
+
+        <!-- Access Rules for training.request -->
+        <record id="training_request_rule_own" model="ir.rule">
+            <field name="name">Training Request: Own Records</field>
+            <field name="model_id" ref="model_training_request"/>
+            <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="training_request_rule_all" model="ir.rule">
+            <field name="name">Training Request: Full Access for Managers</field>
+            <field name="model_id" ref="model_training_request"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_training_manager'))]"/>
+        </record>
+
+        <!-- Model Access -->
+        <record id="access_training_list_user" model="ir.model.access">
+            <field name="name">access_training_list_user</field>
+            <field name="model_id" ref="model_training_list"/>
+            <field name="group_id" eval="False"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="0"/>
+            <field name="perm_create" eval="0"/>
+            <field name="perm_unlink" eval="0"/>
+        </record>
+
+        <record id="access_training_list_manager" model="ir.model.access">
+            <field name="name">access_training_list_manager</field>
+            <field name="model_id" ref="model_training_list"/>
+            <field name="group_id" ref="group_training_manager"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+        </record>
+
+           <record id="access_training_request_user" model="ir.model.access">
+            <field name="name">access_training_request_user</field>
+            <field name="model_id" ref="model_training_request"/>
+            <field name="group_id" ref="base.group_user"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="0"/>
+        </record>
+            <!--        Model Access for Departmental Managers  -->
+        <record id="model_training_request_department_manager" model="ir.model.access">
+            <field name="name">Training Access for Department Managers</field>
+            <field name="model_id" ref="model_training_request"/>
+            <field name="group_id" ref="group_training_department_manager"/>
+            <field name="perm_read">1</field>
+            <field name="perm_write">1</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+
+        <record id="access_training_request_manager" model="ir.model.access">
+            <field name="name">access_training_request_manager</field>
+            <field name="model_id" ref="model_training_request"/>
+            <field name="group_id" ref="group_training_manager"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+        </record>
+
+        <record id="access_employee_training_report" model="ir.model.access">
+            <field name="name">access_employee_training_report</field>
+            <field name="model_id" ref="model_employee_training_report"/>
+            <field name="group_id" ref="group_training_manager"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="1"/>
+            <field name="perm_create" eval="1"/>
+            <field name="perm_unlink" eval="1"/>
+        </record>
+
+          <record id="group_departmental_manager_id" model="res.groups">
+    <field name="name">Departmental Manager Training creation </field>
+    <field name="category_id" ref="base.module_category_human_resources"/>
+</record>
+
+<record id="access_training_request_departmental_manager_id" model="ir.model.access">
+    <field name="name">access_training_request_departmental_manager</field>
+    <field name="model_id" ref="model_training_request"/>
+    <field name="group_id" ref="group_departmental_manager_id"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/> <!-- Ensure this is set to 1 -->
+    <field name="perm_unlink" eval="0"/>
+</record>
+
+<record id="access_training_list_departmental_manager_id" model="ir.model.access">
+    <field name="name">access_training_list_departmental_manager</field>
+    <field name="model_id" ref="model_training_list"/>
+    <field name="group_id" ref="group_departmental_manager_id"/>
+    <field name="perm_read" eval="1"/>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/> <!-- Ensure this is set to 1 -->
+    <field name="perm_unlink" eval="0"/>
+</record>
+
+
+<!-- Rule to allow Departmental Managers to create training for their department only -->
+    <record id="training_request_rule_departmental_manager_id" model="ir.rule">
+        <field name="name">Training Request: Departmental Manager Training creation Access</field>
+        <field name="model_id" ref="model_training_request"/>
+        <field name="domain_force">[('employee_id.department_id', '=', user.employee_id.department_id.id)]</field>
+        <field name="groups" eval="[(4, ref('group_departmental_manager_id'))]"/>
+    </record>
+
+
+        <record id="training_request_rule_departmental_manager" model="ir.rule">
+            <field name="name">Training Requests for Departmental Managers</field>
+            <field name="model_id" ref="model_training_request"/>
+            <field name="domain_force">[('state', '=', 'submit')]</field>
+            <field name="groups" eval="[(4, ref('group_departmental_manager_id'))]"/>
+            <field name="groups" eval="[(4, ref('group_training_department_manager'))]"/>
+
+        </record>
+
+        <record id="training_list_rule_department_employee" model="ir.rule">
+            <field name="name">Training List: Departmental Access for Employees</field>
+            <field name="model_id" ref="model_training_list"/>
+            <field name="domain_force">[('department_id', '=', user.employee_id.department_id.id)]</field>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="calendar_event_rule_employee" model="ir.rule">
+            <field name="name">Employee Calendar Access</field>
+            <field name="model_id" ref="calendar.model_calendar_event"/>
+            <field name="domain_force">[('partner_ids', 'in', [user.partner_id.id])]</field>
+            <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+
+    </data>
+</odoo>
+ 

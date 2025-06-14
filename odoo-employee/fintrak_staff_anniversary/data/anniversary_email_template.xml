@@ -1,0 +1,31 @@
+<odoo>
+    <data noupdate="1">
+        <record id="email_template_work_anniversary" model="mail.template">
+            <field name="name">Work Anniversary Email</field>
+            <field name="email_from">${object.company_id.email}</field>
+            <field name="email_to">${object.work_email}</field>
+            <field name="subject">Happy Work Anniversary, ${object.name}!</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html">
+                <![CDATA[
+                <html>
+                <body>
+                    <p>Dear ${object.name},</p>
+
+                    <p>Congratulations on your work anniversary with ${object.company_id.name}!</p>
+
+                    <p>We are grateful for your dedication and hard work. Your contributions have been invaluable to our success.</p>
+
+                    <p>Best regards,</p>
+
+                    <p>${object.company_id.name}</p>
+
+                    <p>© ${format_date(object.env.context.timestamp, 'y')} ${object.company_id.name}. All rights reserved.</p>
+                </body>
+                </html>
+                ]]>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,4 +1,3 @@
-<!-- views/hr_employee_personal_info_tab.xml -->
 <odoo>
   <data>
     <record id="public_employee_personal_tab" model="ir.ui.view">
@@ -7,41 +6,32 @@
       <field name="inherit_id" ref="hr.hr_employee_public_view_form" />
       <field name="arch" type="xml">
         <xpath expr="//form/header" position="inside">
-          <button name="action_open_wizard"
-            string="Update Personal Info"
-            type="object"
-            class="oe_highlight" />
+          <button name="action_open_wizard" string="Update Personal Info" type="object" class="oe_highlight" groups="fintrak_employee_update.group_employee_self_service,hr.group_hr_manager,hr.group_hr_user,base.group_system" attrs="{'invisible': [('is_logged_in_user', '=', False)]}"/>
         </xpath>
         <xpath expr="//sheet/notebook" position="inside">
-          <page name="public" string="Personal Info">
-            <form string="Employee Details">
-              <sheet>
-                <group string="Personal Information">
-                  <field name="date_of_birth" />
-                  <field name="state_of_origin" />
-                  <field name="lga" />
-                  <field name="town" />
-                  <field name="address_of_employee" />
-                </group>
-
-                <group string="Contact Information">
-                  <field name="contact_phone_number" />
-                  <field name="alternate_phone_number" />
-                </group>
-
-                <group string="Identification">
-                  <field name="means_of_identification" />
-                  <field name="means_of_identification_number" />
-                  <field name="state_of_issuance" />
-                </group>
-
-                <group string="Job and Family Details">
-                  <field name="job_title" />
-                  <field name="marital_status" />
-                  <field name="number_of_primary_dependants" />
-                </group>
-              </sheet>
-            </form>
+          <page name="public" string="Personal Info" groups="fintrak_employee_update.group_employee_self_service,hr.group_hr_manager,hr.group_hr_user,base.group_system" attrs="{'invisible': [('is_logged_in_user', '=', False)]}">
+            <group string="Personal Information">
+              <field name="date_of_birth" />
+              <field name="state_of_origin" />
+              <field name="lga" />
+              <field name="town" />
+              <field name="address_of_employee" />
+            </group>
+            <group string="Contact Information">
+              <field name="contact_phone_number" />
+              <field name="alternate_phone_number" />
+            </group>
+            <group string="Identification">
+              <field name="means_of_identification" />
+              <field name="means_of_identification_number" />
+              <field name="state_of_issuance" />
+            </group>
+            <group string="Job and Family Details">
+              <field name="job_title" />
+              <field name="marital_status" />
+              <field name="number_of_primary_dependants" />
+              <field name="is_logged_in_user" invisible="1"/>
+            </group>
           </page>
         </xpath>
       </field>

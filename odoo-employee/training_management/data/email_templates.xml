@@ -1,0 +1,71 @@
+<odoo>
+    <data noupdate="1">
+
+        <!-- Email Template for Training Request Submission -->
+        <record id="email_template_training_request" model="mail.template">
+            <field name="name">Training Request Submission</field>
+            <field name="model_id" ref="model_training_request"/>
+            <field name="subject">New Training Request: ${object.name.name}</field>
+            <field name="email_from">${object.env.company.email|safe}</field>
+            <field name="email_to">${object.hod_id.user_id.partner_id.email|safe}</field>
+            <field name="email_cc">${object.employee_id.user_id.partner_id.email|safe}</field>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.hod_id.name},</p>
+                <p>A new training request has been created by <strong>${object.employee_id.name}</strong> for the course <strong>${object.name.name}</strong>.</p>
+                <p><strong>Comments:</strong> ${object.comment or 'No comments provided.'}</p>
+                <p>Best regards,</p>
+                <p><strong>Training Management System</strong></p>
+            ]]></field>
+        </record>
+
+       
+        <!-- Email Template for Training Request Approval -->
+        <record id="email_template_training_request_approved" model="mail.template">
+            <field name="name">Training Request Approval Notification</field>
+            <field name="model_id" ref="model_training_request"/>  <!-- Replace with your actual model reference -->
+            <field name="subject">Training Request Approved: ${object.name.name}</field>
+            <field name="email_from">${object.env.company.email|safe}</field>
+            <field name="email_to">${object.employee_id.user_id.partner_id.email|safe}</field>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.employee_id.name},</p>
+                <p>Your training request for the course <strong>${object.name.name}</strong> has been <span style="color:green;"><strong>approved</strong></span>.</p>
+                <p>Best regards,</p>
+                <p><strong>Training Management System</strong></p>
+            ]]></field>
+        </record>
+
+
+        <record id="email_template_training_request_cancel" model="mail.template">
+            <field name="name">Training Request Cancellation</field>
+            <field name="model_id" ref="model_training_request"/>
+            <field name="subject">Training Request Canceled: ${object.name.name}</field>
+            <field name="email_from">${object.env.company.email|safe}</field>
+            <field name="email_to">${object.employee_id.user_id.partner_id.email|safe}</field>
+            <field name="email_cc">${object.hod_id.user_id.partner_id.email|safe}</field>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.employee_id.name},</p>
+                <p>Your training request for the course <strong>${object.name.name}</strong> has been canceled.</p>
+                <p>Best regards,</p>
+                <p><strong>Training Management System</strong></p>
+            ]]></field>
+        </record>
+
+        <record id="email_template_training_request_denied" model="mail.template">
+            <field name="name">Training Request Denied</field>
+            <field name="model_id" ref="model_training_request"/>
+            <field name="email_from">${(object.manager_id.user_id.email or 'noreply@yourcompany.com')}</field>
+            <field name="email_to">${object.employee_id.user_id.email}</field>
+            <field name="subject">Training Request Denied - ${object.name.name}</field>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.employee_id.name},</p>
+                <p>We regret to inform you that your training request for <strong>"${object.name.name}"</strong> has been denied.</p>
+                <p><strong>Reason for denial:</strong><br/>
+                ${object.comment}</p>
+                <p>If you have any questions or require further clarification, please feel free to reach out.</p>
+                <p>Best regards,<br/>
+                ${object.manager_id.name}<br/>
+                Training Management Team</p>
+            ]]></field>
+        </record>
+    </data>
+</odoo>

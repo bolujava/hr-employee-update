@@ -1,0 +1,29 @@
+<odoo>
+
+<!--&lt;!&ndash; Report Action &ndash;&gt;-->
+<!--    <record id="report_training_enrollment_action" model="ir.actions.report">-->
+<!--        <field name="name">Training Enrollment Report</field>-->
+<!--        <field name="model">training.request</field>-->
+<!--        <field name="report_type">qweb-pdf</field>-->
+<!--        <field name="report_name">training_management.report_training_enrollment_template</field>-->
+<!--    </record>-->
+
+
+<!--    &lt;!&ndash; Report Template &ndash;&gt;-->
+<!--    <template id="report_training_enrollment_template">-->
+<!--        <t t-call="web.html_container">-->
+<!--            <t t-foreach="docs" t-as="doc">-->
+<!--                <div class="page">-->
+<!--                    <h2>Training Enrollment Report</h2>-->
+<!--                    <p><strong>Training Name:</strong> <t t-esc="doc.name"/></p>-->
+<!--                    <p><strong>Start Date:</strong> <t t-esc="doc.start_date"/></p>-->
+<!--                    <p><strong>End Date:</strong> <t t-esc="doc.end_date"/></p>-->
+<!--                    <p><strong>Total Enrolled:</strong> <t t-esc="doc.total_participants"/></p>-->
+<!--                    <p><strong>Department:</strong> <t t-esc="doc.department_id.name"/></p>-->
+<!--                    <p><strong>Progress:</strong> <t t-esc="doc.progress_percentage"/>%</p>-->
+<!--                </div>-->
+<!--            </t>-->
+<!--        </t>-->
+<!--    </template>-->
+
+</odoo>

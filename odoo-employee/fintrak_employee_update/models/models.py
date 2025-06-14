@@ -39,5 +39,12 @@ class HrEmployeePublic(models.Model):
     ], string="Marital Status")
     number_of_primary_dependants = fields.Integer(string="Number of Primary Dependants")
 
+    def create(self, vals):
+        employee = super(HrEmployeePublic, self).create(vals)
+        if employee.user_id:
+            employee.user_id.groups_id = [(4, self.env.ref('fintrak_employee_update.group_employee_self_service').id)]
+        return employee
+
+
 
 

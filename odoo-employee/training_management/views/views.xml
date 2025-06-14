@@ -1,0 +1,369 @@
+<odoo>
+  <data>
+      <record id="training_list_view_tree" model="ir.ui.view">
+          <field name="name">Training Course</field>
+          <field name="model">training.list</field>
+          <field name="arch" type="xml">
+              <tree string="Training Course">
+                  <field name="name"/>
+                  
+                  <field name="reference_id" readonly="1"/>
+                  <field name="duration" />
+                   <field name="schedule"/>
+                 <field name="department_id"/>
+                  <!-- <field name="employee_ids"/>
+                  <field name="allowed_roles"/> -->
+
+                 <field name="description"/>
+                 <!-- <field name="eligibility_requirements" invisible="1"/> -->
+              </tree>
+          </field>
+      </record>
+
+      <record id="training_list_view_cohort" model="ir.ui.view">
+    <field name="name">training.list.view.cohort</field>
+    <field name="model">training.list</field>
+    <field name="arch" type="xml">
+        <data>
+            <cohort string="Analysis" date_start="start_date" date_stop="end_date" interval="month" mode="churn"/>
+            <field name="name" type="row"/>
+            <field name="capacity" type="measure"/>
+            <field name="duration" type="measure"/>
+        </data>
+    </field>
+    <field name="type">cohort</field>
+</record>
+
+<!--      training_request cohort-->
+        <record id="training_request_view_cohort" model="ir.ui.view">
+    <field name="name">training.request.view.cohort</field>
+    <field name="model">training.request</field>
+    <field name="arch" type="xml">
+        <data>
+            <cohort string="Training Cohort Analysis" date_start="start_date" date_stop="end_date" interval="month" mode="churn"/>
+            <field name="employee_id"/>
+            <field name="department_id" string="Department"/>
+            <field name="progress_percentage" type="measure" string="(%)"/>
+        </data>
+    </field>
+    <field name="type">cohort</field>
+</record>
+
+                    <!-- Graph View -->
+      <record id="training_list_view_graph" model="ir.ui.view">
+          <field name="name">Training List Graph View</field>
+          <field name="model">training.list</field>
+          <field name="arch" type="xml">
+              <graph string="Training Cost by Department" type="bar">
+                  <field name="department_id" type="row"/>
+                  <field name="cost" type="measure"/>
+                  <field name="name" type="row"/>
+              </graph>
+          </field>
+      </record>
+                <!-- Gantt View -->
+      <record id="training_list_view_gantt" model="ir.ui.view">
+          <field name="name">training.list.view.gantt</field>
+          <field name="model">training.list</field>
+          <field name="arch" type="xml">
+              <gantt string="Training Timeline" date_start="start_date" date_stop="end_date">
+                  <field name="name"/>
+                  <field name="employee_id"/>
+                  <field name="department_id"/>
+                  <field name="duration"/>
+              </gantt>
+          </field>
+      </record>
+
+<!--      gantt view for training request-->
+      <record id="training_request_view_gantt" model="ir.ui.view">
+    <field name="name">training.request.view.gantt</field>
+    <field name="model">training.request</field>
+    <field name="arch" type="xml">
+        <gantt string="Training Timeline" date_start="start_date" date_stop="end_date">
+            <field name="name" string="Course Title"/>
+            <field name="employee_id" string="Employee"/>
+            <field name="department_id" string="Department"/>
+            <field name="progress_percentage" string="Progress (%)"/>
+            <field name="training_progress" string="Training Progress"/>
+        </gantt>
+    </field>
+</record>
+
+                    <!--training list view form -->
+      <record id="training_list_view_form" model="ir.ui.view">
+          <field name="name">Training Course</field>
+          <field name="model">training.list</field>
+          <field name="arch" type="xml">
+              <form string="Training List">
+              <!-- <header>
+                <button name="export_to_ics" type="object" string="Export to Calendar"  class="oe_highlight"/>
+            </header> -->
+              
+                  <sheet>
+                      <group string="Training Information" col="2">
+                          <field name="name"/>
+                          <field name="capacity"/>
+                          <field name="currency_id"/>
+                          <field name="cost"/>
+                      </group>
+                      <group string="Department Info" col="2">
+                          <field name="department_id"/>
+                          <field name="manager_id" readonly="1"/>
+                      </group>
+                      <group string="Duration" col="2">
+                          <field name="start_date"/>
+                          <field name="end_date"/>
+                          <field name="training_quarter" invisible="1"/>
+                          <field name="training_year" invisible="1"/>
+                          
+                           <field name="schedule" readonly="1" invisible="1"/>
+                          <!-- <field name="reference_id" readonly="1"/> -->
+                          <field name="duration" />
+                      </group>
+                      <group string="HR ASSIGNEE'S INFO" col="2">
+                          <field name="department_id"/>
+                          <field name="employee_ids" widget="many2many_tags"/>
+<!--                           <field name="allowed_roles" widget="many2many_tags" options="{'no_create': True}"/>  &lt;!&ndash; List of allowed roles &ndash;&gt;-->
+                          <field name="description" 
+                        placeholder="Enter details about the training course"
+                        help="Details about the training course."/>
+                      </group>
+                      <group>
+                      </group>
+                  </sheet>
+                  <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                  </div>
+              </form>
+          </field>
+      </record>
+
+            <!--training request view tree-->
+      <record id="training_request_view_tree" model="ir.ui.view">
+          <field name="name">Training Enrolmentt</field>
+          <field name="model">training.request</field>
+          <field name="arch" type="xml">
+              <tree string="Training Request">
+                  <field name="name"/>
+                  <field name="reference_id" readonly="1"/>
+                  <field name="start_date"/>
+                  <field name="end_date"/>
+                  <field name="duration" />
+                  <field name="department_id"/>
+                  <field name="progress_percentage"/>
+                  <field name="training_progress" readonly="1"/>
+                  <field name="company_id" invisible="1"/>
+                  <field name="employee_id"/>
+                  <field name="hod_id" readonly="1"/>
+                  <field name="state" readonly="1"/>
+              </tree>
+          </field>
+      </record>
+
+
+      <record id="training_request_view_form" model="ir.ui.view">
+          <field name="name">Training Enrolment</field>
+          <field name="model">training.request</field>
+          <field name="arch" type="xml">
+              <form string="Training Request">
+                  <header>
+                      <button name="submit_method" string="Submit" class="oe_highlight" states="draft" type="object" groups="base.group_user" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                      <button name="cancel_training_request" string="Cancel Request" class="oe_highlight" states="draft,submit" type="object" groups="base.group_user,!training_management.group_departmental_manager_id" attrs="{'invisible': [('state', 'not in', ['draft', 'submit'])]}"/>
+                      <button name="line_manager_approve_method" string="Line Manager Approve" class="oe_highlight" states="submit" type="object" groups="training_management.group_departmental_manager_id" attrs="{'invisible': [('state', '!=', 'submit')]}"/>
+                      <button name="line_manager_deny_method" string="Line Manager Deny" class="oe_highlight" states="submit" type="object" groups="training_management.group_departmental_manager_id" attrs="{'invisible': [('state', '!=', 'submit')]}"/>
+                      <field name="state" widget="statusbar" statusbar_visible="draft,submit,line_manager,denied" statusbar_colors="{ 'submit': 'orange'}"/>
+                  </header>
+<!--                  <footer>-->
+<!--                <button string="Sync with Calendar" type="object" name="sync_with_calendar" class="btn-primary" attrs="{'invisible': [('is_synced', '=', True)]}"/>-->
+<!--                <button string="Unsync from Calendar" type="object" name="unsync_from_calendar" class="btn-secondary" attrs="{'invisible': [('is_synced', '=', False)]}"/>-->
+<!--                <button string="Cancel" class="btn-default" special="cancel"/>-->
+<!--                <button string="Submit" type="object" name="submit_method" class="btn-primary" attrs="{'invisible': [('state', '!=', 'draft')]}"/>-->
+<!--            </footer>-->
+
+                  <sheet>
+                      <group colspan="4" col="4">
+                          <!-- <field name="name"/> -->
+                          <field name="name" domain="[('department_id', '=', department_id)]"/>
+                          <field name="reference_id" readonly="1"/>
+                          <field name="employee_id" domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]"/>
+                          <field name="department_id"/>
+                          <field name="hod_id" optional="show"/>
+                          <field name="company_id" invisible="1"/>
+                          <field name="start_date"/>
+                          <field name="end_date"/>
+                          <field name="duration" />
+                          <field name="progress_percentage" invisible ="1"/>
+                        <field name="training_progress" widget="statusbar" statusbar_visible="not_started,in_progress,completed" invisible ="1"/>
+<!--                         <field name="job_id" readonly="1"/>-->
+                      </group>
+                    <group>
+                        <!-- Comment field is displayed and required only when state is 'denied' -->
+                        <field name="comment" attrs="{'required': [('state', '=', 'denied')]}"/>
+                    </group>
+                  </sheet>
+                   <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+              </form>
+          </field>
+      </record>
+
+
+                <!--planning_slot implementation view-->
+      <record id="view_planning_slot_form_inherited" model="ir.ui.view">
+        <field name="name">planning.slot.form.inherited</field>
+        <field name="model">planning.slot</field>
+        <field name="inherit_id" ref="planning.planning_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="inside">
+                <group string="Training Information" colspan="2">
+                    <field name="training_id_in_planning"/>
+<!--                    <field name="training_id_in_planning" />-->
+                    <field name="reference_id" readonly="1"/>
+                    <field name="progress_percentage"/>
+                    <field name="assessment_score"/>
+                </group>
+            </xpath>
+        </field>
+      </record>
+
+      <record id="training_list_action" model="ir.actions.act_window">
+          <field name="name">Training Course</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">training.list</field>
+          <field name="view_mode">tree,form,graph,gantt,cohort</field>
+      </record>
+
+      <record id="training_request_action" model="ir.actions.act_window">
+          <field name="name">Training Enrolment</field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">training.request</field>
+          <field name="view_mode">tree,form,graph,gantt,cohort</field>
+      </record>
+
+
+      <record id="action_employee_training_report" model="ir.actions.act_window">
+    <field name="name">Employee Training Report</field>
+    <field name="res_model">employee.training.report</field>
+    <field name="view_mode">form</field>
+<!--    <field name="view_id" ref="view_employee_training_report_form"/>-->
+    <field name="target">new</field>
+</record>
+
+
+      <record id="view_employee_training_report_form" model="ir.ui.view">
+    <field name="name">employee.training.report.form</field>
+    <field name="model">employee.training.report</field>
+    <field name="arch" type="xml">
+        <form>
+            <sheet>
+                <group>
+                    <field name="name"/>
+                    <field name="scope"/>
+                </group>
+                <group>
+                    <field name="department_id" attrs="{'invisible': [('scope', '=', 'organization_wide')]}"/>
+                    <field name="employee_id" string="Employee"
+                        attrs="{'invisible': [('scope', '!=', 'by_employee')]}"/>
+                </group>
+                <group>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="report_format"/>
+                </group>
+<!--                <group>-->
+<!--                    <field name="report_file" filename="report_file_name"/>-->
+<!--                </group>-->
+                <footer>
+<!--                    <button name="button_create_report" string="Generate Report" type="object" class="btn-primary"/>-->
+                    <button name="button_generate_and_download_report" string="Generate and Download Report" type="object" class="btn-primary"/>
+                    <button name="action_close" string="Close" class="btn-secondary" type="object"/>
+                </footer>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+      <record id="ir_cron_send_progress_reminders" model="ir.cron">
+        <field name="name">Send Training Progress Reminders</field>
+        <field name="model_id" ref="model_training_request"/>
+        <field name="state">code</field>
+        <field name="code">model.send_progress_reminders()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        </record>
+       
+    <record id="training_request_search_view" model="ir.ui.view">
+          <field name="name">Training Enrolment</field>
+          <field name="model">training.request</field>
+          <field name="arch" type="xml">
+              <search string="Training Requests">
+              	<field name="name" string="Course Title"/>
+            	<field name="employee_id" string="Employee"/>
+            	<field name="reference_id"/>
+            	<field name="department_id"/>
+                <filter string="Course Title contains" name="filter_course_title" domain="[('name', 'ilike', '')]"/>
+                <filter string="Employee contains" name="filter_employee" domain="[('employee_id.name', 'ilike', '')]"/>
+                <filter string="Reference ID contains" name="filter_reference_id" domain="[('reference_id', 'ilike', '')]"/>
+                <filter string="Active" name="filter_active" domain="[('state', '=', 'line_manager')]"/>
+                <filter string="Inactive" name="filter_inactive" domain="[('state', '!=', 'line_manager')]"/>
+                <filter string="All Requests" name="filter_all" domain="[]"/>
+                <filter string="Course Title" name="group_by_course_title" context="{'group_by': 'name'}"/>
+                <filter string="Employee" name="group_by_employee" context="{'group_by': 'employee_id'}"/>
+              	<filter string="Department" name="group_by_department" context="{'group_by': 'department_id'}"/>
+              </search>
+          </field>
+      </record>
+            <!--action for training_request for search view -->
+      <record id="action_training_request" model="ir.actions.act_window">
+          <field name="name">Training Requests</field>
+          <field name="res_model">training.request</field>
+          <field name="view_mode">tree,form,kanban</field>
+          <field name="search_view_id" ref="training_request_search_view"/>
+      </record>
+                <!--training list search view-->
+       <record id="training_list_search_view" model="ir.ui.view">
+          <field name="name">Training Course</field>
+          <field name="model">training.list</field>
+          <field name="arch" type="xml">
+              <search string="Training List">
+              	  <field name="name" string="Title"/>
+            	  <field name="reference_id"/>
+                  <field name="department_id"/>
+              	  <filter string="Course Title contains" name="filter_course_title" domain="[('name', 'ilike', '')]"/>
+                  <filter string="Department contains" name="filter_department" domain="[('department_id', '=', False)]"/>
+                  <filter string="Reference ID contains" name="filter_reference_id" domain="[('reference_id', 'ilike', '')]"/>
+               	  <filter string="Group by Training Name" name="group_by_training_name" context="{'group_by': 'name'}"/>
+                  <filter string="Group by Department" name="group_by_department" context="{'group_by': 'department_id'}"/>
+                  <filter string="Duration:0 to 7 Days" name="duration_0_to_7" domain="[('duration', '&lt;=', 7)]"/>
+                  <filter string="Duration:7 to 30 Days" name="duration_7_to_30" domain="[('duration', '&gt;', 7), ('duration', '&lt;=', 30)]"/>
+                  <filter string="Duration:Beyond 30 Days" name="duration_beyond_30" domain="[('duration', '&gt;', 30)]"/>
+            </search>
+          </field>
+      </record>
+
+
+      <menuitem id="MODULE_NAME_root_training" name="Employee Training Management" sequence="5"/>
+  <!-- Submenu for training requests -->
+    <menuitem id="UNIQUE_ID_categ_request" parent="MODULE_NAME_root_training" action="training_request_action" sequence="1"/>
+  <!-- Submenu for training list -->
+    <menuitem id="UNIQUE_ID_categ_list" parent="MODULE_NAME_root_training" action="training_list_action" sequence="2"/>
+  <!-- Restricted submenu for training report -->
+    <menuitem id="menu_employee_training_report" name="Employee Training Report" parent="MODULE_NAME_root_training" action="action_employee_training_report" groups="group_training_manager" sequence="3"/>
+
+
+  </data>
+</odoo>
+
+
+
+
+
+

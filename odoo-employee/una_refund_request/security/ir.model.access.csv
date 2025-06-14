@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_refund_request_user,refund_request.user,model_refund_request_refund_request,base.group_user,1,1,1,1
+access_refund_request_refund_officer,refund_request.refund_officer,model_refund_request_refund_request,una_refund_request.group_refund_officer,1,1,1,0
+access_refund_request_account_officer,refund_request.account_officer,model_refund_request_refund_request,una_refund_request.group_account_officer,1,1,0,0
+access_refund_request_crm_lead,access.refund_request.crm.lead,model_refund_request_refund_request,una_refund_request.group_crm_lead,1,1,1,1
+access_refund_request_crm_support,access.refund_request.crm.support,model_refund_request_refund_request,una_refund_request.group_crm_support,1,0,0,0
+

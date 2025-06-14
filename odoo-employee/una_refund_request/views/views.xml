@@ -1,0 +1,130 @@
+<odoo>
+  <data>
+
+    <!-- Tree View -->
+    <record id="view_refund_request_tree" model="ir.ui.view">
+      <field name="name">refund.request.tree</field>
+      <field name="model">refund_request.refund_request</field>
+      <field name="arch" type="xml">
+        <tree string="Refund Requests">
+          <field name="reference_code"/>
+          <field name="name"/>
+          <field name="ticket_number"/>
+          <field name="amount"/>
+          <field name="state"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="view_refund_request_form" model="ir.ui.view">
+      <field name="name">refund.request.form</field>
+      <field name="model">refund_request.refund_request</field>
+      <field name="arch" type="xml">
+        <form string="Refund Request">
+
+          <field name="state" attrs="{'invisible': True}"/>
+
+          <header>
+            <button name="action_validate" type="object" string="Validate"
+                    class="btn-primary"
+                    groups="una_refund_request.group_refund_officer"
+                    attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+
+            <button name="action_invalidate" type="object" string="Invalidate"
+                    class="btn-danger"
+                    groups="una_refund_request.group_refund_officer"
+                    attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+
+            <button name="action_approve_payment" type="object" string="Approve Payment"
+                    class="btn-success"
+                    groups="una_refund_request.group_account_officer"
+                    attrs="{'invisible': [('state', '!=', 'valid')]}"/>
+          </header>
+
+
+          <sheet>
+            <!-- Refund Reason -->
+            <group string="Refund Reason">
+              <field name="reason" widget="radio"/>
+            </group>
+
+            <!-- Two-column layout -->
+            <group col="2">
+              <group string="Ticket Info">
+                <field name="reference_code"/>
+                <field name="ticket_number"/>
+                <field name="date_of_sale"/>
+                <field name="amount"/>
+              </group>
+
+              <group string="Contact Info">
+                <field name="name"/>
+                <field name="phone_number"/>
+                <field name="email"/>
+              </group>
+
+              <group string="Bank Details">
+                <field name="account_name"/>
+                <field name="account_number"/>
+                <field name="receiving_bank"/>
+              </group>
+
+              <group string="Evidence">
+                <field name="evidence" filename="ticket_number"/>
+              </group>
+
+              <group string="Status">
+                <field name="state" readonly="1"/>
+              </group>
+              <group string="Support Assignment">
+                <field name="assigned_support_id" groups="una_refund_request.group_crm_lead"/>
+                <button name="action_assign_support" type="object" string="Assign Support" class="btn-secondary" groups="una_refund_request.group_crm_lead" attrs="{'invisible': [('state', '=', 'inpayment')]}" />
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- Search View -->
+    <record id="view_refund_request_search" model="ir.ui.view">
+      <field name="name">refund.request.search</field>
+      <field name="model">refund_request.refund_request</field>
+      <field name="arch" type="xml">
+        <search string="Search Refund Requests">
+          <field name="reference_code"/>
+          <field name="name"/>
+          <field name="ticket_number"/>
+          <field name="email"/>
+          <field name="state"/>
+          <filter string="Draft" name="filter_draft" domain="[('state', '=', 'draft')]"/>
+          <filter string="Valid" name="filter_valid" domain="[('state', '=', 'valid')]"/>
+          <filter string="Invalid" name="filter_invalid" domain="[('state', '=', 'invalid')]"/>
+          <filter string="In Payment" name="filter_inpayment" domain="[('state', '=', 'inpayment')]"/>
+          <group expand="1" string="Group By">
+            <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+            <filter string="Reason" name="group_reason" context="{'group_by': 'reason'}"/>
+          </group>
+        </search>
+      </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_refund_request" model="ir.actions.act_window">
+      <field name="name">Refund Requests</field>
+      <field name="res_model">refund_request.refund_request</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="view_refund_request_tree"/>
+      <field name="search_view_id" ref="view_refund_request_search"/>
+    </record>
+
+    <!-- Menus -->
+    <menuitem id="menu_refund_root" name="Refund Requests" sequence="10"/>
+    <menuitem id="menu_refund_request"
+              name="All Requests"
+              parent="menu_refund_root"
+              action="action_refund_request"/>
+
+  </data>
+</odoo>

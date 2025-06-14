@@ -1,4 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_employee_personal_info_user,access.employee.personal.info.user,model_hr_employee,base.group_user,1,1,1,0
 access_employee_personal_info_wizard_user,access.employee.personal.info.wizard.user,model_employee_personal_info_wizard,base.group_user,1,1,1,0
+access_hr_employee_public_self_service,access.hr.employee.public,model_hr_employee_public,fintrak_employee_update.group_employee_see_all_colleagues,1,0,0,0
+
 

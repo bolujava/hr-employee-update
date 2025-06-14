@@ -7,7 +7,7 @@ class HrEmployeePersonalInfo(models.Model):
     _description = 'Employee Personal Info'
     _auto = False
 
-    _inherit = ['hr.employee.base', 'hr.employee.public']
+    _inherit = 'hr.employee.public'
 
     employee_id = fields.Many2one('hr.employee', string="Employee", required=True, ondelete="cascade")
     identification_number = fields.Char()

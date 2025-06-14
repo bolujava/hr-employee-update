@@ -1,0 +1,17 @@
+<odoo>
+    <data noupdate="1">
+        <!-- Custom Subtype for Employee Notifications -->
+        <record id="subtype_employee_notification" model="mail.message.subtype">
+            <field name="name">Employee Notification</field>
+            <field name="description">Notifications for employees</field>
+            <field name="internal">False</field>
+        </record>
+
+        <!-- Custom Subtype for Manager Notifications -->
+        <record id="subtype_manager_notification" model="mail.message.subtype">
+            <field name="name">Manager Notification</field>
+            <field name="description">Notifications for managers</field>
+            <field name="internal">True</field>
+        </record>
+    </data>
+</odoo>

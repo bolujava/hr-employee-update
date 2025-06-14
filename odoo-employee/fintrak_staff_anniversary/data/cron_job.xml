@@ -1,0 +1,15 @@
+<odoo>
+    <data noupdate="1">
+        <!-- Create a cron job to send anniversary emails daily -->
+        <record id="ir_cron_send_anniversary_email" model="ir.cron">
+            <field name="name">Send Work Anniversary Emails</field>
+            <field name="model_id" ref="model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">model.send_anniversary_email()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="active" eval="True"/>
+        </record>
+    </data>
+</odoo>
